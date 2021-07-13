@@ -183,42 +183,64 @@ uint32 WriteCommandPacket(uint8 cmd)
 *
 *******************************************************************************/
 uint8  readbuffer[BUFFER_SIZE];
-uint8  buffer[BUFFER_SIZE];
-    
+uint8  buffer_1[2u];
+uint8 buffer_2[2u];    
+uint8 buffer_3[2u];
+uint8 buffer_4[4u];
 int main()
 {
-
-            buffer[0] = 1;
-            buffer[1] = 0;
-            buffer[2] = 3;
-            buffer[3] = 7;
-            buffer[4] = 9;
-            buffer[5] = buffer[0]^buffer[1]^buffer[2]^buffer[3]^buffer[4] ;
+    // 19 24 37
+            buffer_1[0] = 11;
+            buffer_1[1] = 11;
+            buffer_2[0] = 24;
+            buffer_2[1] = 24;
+            buffer_3[0]=37;
+            buffer_3[1]=37;
+            buffer_4[0]=50;
+            buffer_4[1]=0xFF;
+            buffer_4[2]=0xFC;
+            buffer_4[3]=53;
+            
     CyGlobalIntEnable;
      I2CM_Start();
     UART_1_Start();
      for(;;)
     {
-          /*  buffer[0] = 1;
-            buffer[1] = 2;
-            buffer[2] = 3;
-            buffer[3] = 4;
-            buffer[4] = 5;
-            buffer[5] =( buffer[0]^buffer[1]^buffer[2]^buffer[3]^buffer[4]) ;*/
+          
          
 
     /* Initialize buffer with packet */
     
       //  CyDelay(1u);
         I2CM_I2CMasterWriteBuf(I2C_SLAVE_ADDR,
-                                    buffer, PACKET_SIZE,
+                                    buffer_1, PACKET_SIZE,
                                     I2CM_I2C_MODE_COMPLETE_XFER);
-
         while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
         {
             // Wait 
         }
-         I2CM_I2CMasterReadBuf(I2C_SLAVE_ADDR,
+        I2CM_I2CMasterWriteBuf(I2C_SLAVE_ADDR,
+                                    buffer_2, PACKET_SIZE,
+                                    I2CM_I2C_MODE_COMPLETE_XFER);
+        while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
+        {
+            // Wait 
+        }
+        I2CM_I2CMasterWriteBuf(I2C_SLAVE_ADDR,
+                                    buffer_3, PACKET_SIZE,
+                                    I2CM_I2C_MODE_COMPLETE_XFER);
+        while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
+        {
+            // Wait 
+        }
+        I2CM_I2CMasterWriteBuf(I2C_SLAVE_ADDR,
+                                    buffer_4, PACKET_SIZE,
+                                    I2CM_I2C_MODE_COMPLETE_XFER);
+        while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
+        {
+            // Wait 
+        }
+        /* I2CM_I2CMasterReadBuf(I2C_SLAVE_ADDR,
                                     readbuffer, PACKET_SIZE,
                                     I2CM_I2C_MODE_COMPLETE_XFER);
        
@@ -231,26 +253,9 @@ int main()
             }
          //I2CM_I2CMasterClearWriteBuf();
       
-         //I2CM_I2CMasterClearReadBuf();
-       /*if(readbuffer[5]==(readbuffer[0]^readbuffer[1]^readbuffer[2]^readbuffer[3]^readbuffer[4])){
-            buffer[0] = readbuffer[0]+5;
-            buffer[1] = readbuffer[1]+5;
-            buffer[2] = readbuffer[2]+5;
-            buffer[3] = readbuffer[3]+5;
-            buffer[4] = readbuffer[4]+5;
-            buffer[5] = buffer[0]^buffer[1]^buffer[2]^buffer[3]^buffer[4] ;
-            }
+         //I2CM_I2CMasterClearReadBuf();*/
        
-       I2CM_I2CMasterWriteBuf(I2C_SLAVE_ADDR,
-                                    buffer, PACKET_SIZE,
-                                    I2CM_I2C_MODE_COMPLETE_XFER);
-
-        while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
-        {
-            // Wait 
-        }*/
-        
-    CyDelay(10u);
+    //CyDelay(10u);
         }
     }
        /* for(int i=0;i<3;i++){
