@@ -68,10 +68,10 @@
 #endif
     
 /* I2C Slave address to communicate with */
-#define I2C_SLAVE_ADDR      (0x08u)
+#define I2C_SLAVE_ADDR      (0xE8u)
 
 /* Buffer and packet size */
-#define BUFFER_SIZE         (6u)
+#define BUFFER_SIZE         (4u)
 #define PACKET_SIZE         (BUFFER_SIZE)
 
 /* Packet positions */
